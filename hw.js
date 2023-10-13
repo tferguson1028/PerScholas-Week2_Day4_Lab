@@ -27,9 +27,7 @@ console.log("\n" + "-".repeat(20) + " Q5: FizzBuzz " + "-".repeat(20));
 FizzBuzz(); // I'm not doing expected output for this one.
 
 
-
 /* Functions */
-
 // 1. Write an function that contains an if/else statement for the following requirements:
 // - If student gets 80 or higher: console log  You did a good job
 // - If students get 70 or above: console log Keep trying
