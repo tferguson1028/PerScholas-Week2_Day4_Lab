@@ -19,9 +19,11 @@ receiptInQuarters(9.25, 2); // Expected Output: 29
 receiptInQuarters(9.29, 2); // Expected Output: 29
 
 console.log("\n" + "-".repeat(20) + " Q4: Bills Returned " + "-".repeat(20));
-receiptInBills(10, 5);    // Expected Output: 5
-receiptInBills(10.89, 2); // Expected Output: 8
-receiptInBills(18.89, 8); // Expected Output: 10
+receiptInBills(10, 5);    // Expected Output: 1 $5
+receiptInBills(10.89, 2); // Expected Output: 1 $5, 3 $1
+receiptInBills(18.89, 8); // Expected Output: 1 $10
+receiptInBills(18.89, 8); // Expected Output: 1 $10
+receiptInBills(188.89, 4); // Expected Output: 1 $100, 1 $50, 1 $20, 1 $10, 4 $1
 
 console.log("\n" + "-".repeat(20) + " Q5: FizzBuzz " + "-".repeat(20));
 FizzBuzz(); // I'm not doing expected output for this one.
@@ -102,11 +104,31 @@ function receiptInQuarters(amountPaid, itemCost)
 // Return in as large denominations as possible. Parameters should be amount paid and amount cost
 function receiptInBills(amountPaid, itemCost)
 {
-  let billsReturned = 0;
+  let differenceNoCent = 0;
   let difference = amountPaid - itemCost;
-  for(billsReturned = 0; billsReturned <= difference-1; billsReturned++); // difference-1 accounts for left over cent
+  for(differenceNoCent = 0; differenceNoCent <= difference-1; differenceNoCent++); // difference-1 accounts for left over cent
+
+  console.log(`Given: \$${amountPaid}, Cost: \$${itemCost}, Dif: \$${differenceNoCent}`);  
+  let oneBills = [0, 1];
+  let fiveBills = [0, 5];
+  let tenBills = [0, 10];
+  let twentyBills = [0, 20];
+  let fiftyBills = [0, 50];
+  let hundredBills = [0, 100];
+  let billDenomsArr = [hundredBills, fiftyBills, twentyBills, tenBills, fiveBills, oneBills];
   
-  console.log(`Bills returned: ${billsReturned}`);
+  let billsReturned = 0;
+  for(denom of billDenomsArr)
+  {
+    denom[0] = Math.floor(differenceNoCent / denom[1]);
+    differenceNoCent = differenceNoCent % denom[1];
+    billsReturned += denom[0];
+  }
+  
+  for(denom of billDenomsArr)
+    if(denom[0] != 0)
+      console.log(`\$${denom[1]} bills: ${denom[0]}`);
+  console.log(`Total bills returned: ${billsReturned}\n`);
 }
 
 
